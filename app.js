@@ -1,8 +1,10 @@
 let userScore = 0;
-let compScore = 0;
+let computerScore = 0;
 
 const choices = document.querySelectorAll(".choice");
 const msg = document.querySelector("#msg");
+const userScorePara = document.querySelector("#userScore");
+const computerScorePara = document.querySelector("#computerScore");
 
 
 const genComputerChoice = () => {
@@ -12,13 +14,20 @@ const genComputerChoice = () => {
  
 };
 
-const showWinner = (userWins) => {
+const showWinner = (userWins, userChoice, computerChoice) => {
     if (userWins) {
+        userScore++;
+        userScorePara.innerText = userScore;
         console.log("You win!");
-        msg.innerText = "You win!";
+        msg.innerText = `You win! Your ${userChoice} beats ${computerChoice}`;
+        msg.style.backgroundColor = "green";
     } else {
+        computerScore++;
+        computerScorePara.innerText = computerScore;
      console.log("You lose!");
-        msg.innerText = "You lose!";
+        msg.innerText = `You lose! ${computerChoice} beats your ${userChoice}`;
+        msg.style.backgroundColor = "red";
+
 
 }
 };
@@ -31,6 +40,9 @@ console.log("computer choice =", computerChoice);
 if (userChoice === computerChoice) {
     console.log("It's a tie!");
     msg.innerText = "It's a tie!";
+    msg.style.backgroundColor = "#335933";
+    //  "#598059";
+
 }else {
     let userWins = true;
     if (userChoice === "rock") {
@@ -40,11 +52,9 @@ if (userChoice === computerChoice) {
     } else if (userChoice === "scissors") {
         userWins = computerChoice === "paper"? true : false;
     }
-    showWinner(userWins);
+    showWinner(userWins, userChoice, computerChoice);
 }
-};
-
-
+}
 choices.forEach((choice) => {
   choice.addEventListener("click", () => {
     const userChoice = choice.getAttribute("id");
